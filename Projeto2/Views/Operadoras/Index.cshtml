@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Projeto2.Models.Operadora>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeOperadora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoOperadora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeOperadora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoOperadora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.OperadoaID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.OperadoaID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.OperadoaID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>
