@@ -1,0 +1,83 @@
+﻿<html ng-app="aplicacao">
+<head>
+    <title>Angular aplicacao</title>
+
+    <!--Scripts-->
+    <script src="../../Scripts/angularJS/angular.js"></script>
+    <script src="../../Scripts/angularJS/angular-messages.js"></script>
+    <script src="../../Scripts/angularJS/angular-route.js"></script>
+    <script src="../../Scripts/angularJS/angular-locale_pt-br.js"></script>
+
+    <!--Estilos-->
+    <link href="../../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../../Content/Style/ListaContatos.css" rel="stylesheet" />
+</head>
+<body class="principal">
+    
+    <div ng-controller="ListaContatosController">
+        <div class="jumbotron">
+            <h3 ng-bind="appName" class="titulo"></h3>
+            <!--TABLE LISTA CONTATOS-->
+            <table class="table table-condensed table-hover">
+                <tr class="alert-info">
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Operadora</th>
+                </tr>
+                <tr ng-repeat="contato in contatos" class="palleta">
+                    <td></td>
+                    <td>{{ contato.NomeContato }}</td>
+                    <td>{{ contato.TelefoneContato }}</td>
+                    <td>{{ contato.Operadora.NomeOperadora }}</td>
+                </tr>
+                <tr class="palleta">
+                    <td></td>
+                    <td>{{ contato.NomeContato}}</td>
+                    <td>{{ contato.TelefoneContato}}</td>
+                    <td></td>
+                </tr>
+            </table>
+            <!--TABLE LISTA CONTATOS FIM-->
+            <hr />
+            <div>
+                <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome"/>
+                <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone"/>
+                <select ng-model="contato.OperadoraIDContato">
+
+                </select>
+                <button class="btn  btn-info btn-block" ng-click="AddContato(contato)">Adicionar Contato</button>
+            </div>
+        </div>
+      </div>  
+        
+        
+
+    <div ng-include="'footer.html'"></div>
+
+
+    <script>
+    angular.module("aplicacao", []);
+    angular.module("aplicacao").controller("ListaContatosController", function ($scope, $http) {
+        $scope.appName = "Lista de Contatos";
+
+        $scope.AddContato = function (contato) {
+            console.log(contato);
+        };
+        var carregarContatos = function () {
+            $http.get("http://localhost:53957/api/Contato").success(function (data, status) {
+                $scope.contatos = data;
+            });
+        };
+
+        var carregarOperadoras = function () {
+            $http.get("http://localhost:53957/api/Operadora").success(function (data, status) {
+                $scope.operadoras = data;
+            });
+        };
+       
+        carregarContatos();
+    });
+    </script>
+</body>
+</html>

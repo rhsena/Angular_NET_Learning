@@ -22,6 +22,7 @@ namespace Projeto2.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
+
             : base("AgendaTelefonica", throwIfV1Schema: false)
         {
         }

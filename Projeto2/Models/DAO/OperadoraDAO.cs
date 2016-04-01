@@ -17,11 +17,11 @@ namespace Projeto2.Models.DAO
             }
         }
 
-        public IQueryable<Operadora> Get()
+        public IEnumerable<Operadora> Get()
         {
             using (ApplicationDbContext dbcontext = new ApplicationDbContext())
             {
-                return  dbcontext.Operadoras;
+                return  dbcontext.Operadoras.ToList();
             }
         }
 

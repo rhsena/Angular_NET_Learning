@@ -23,7 +23,6 @@ namespace Projeto2.Controllers
         {
             ContatoDAO contatoDao = new ContatoDAO();
             return contatoDao.Get();
-            //return x;
         }
 
         // GET: api/Contato/5

@@ -292,11 +292,16 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Style\ListaContatos.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\angularJS\angular-locale_pt-br.js" />
+    <Content Include="Scripts\angularJS\angular-messages.js" />
+    <Content Include="Scripts\angularJS\angular-route.js" />
+    <Content Include="Scripts\angularJS\angular.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -332,6 +337,13 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="ViewsAngularWhatever\controller\ListaTelefonicaController.js" />
+    <Content Include="ViewsAngularWhatever\controller\novoContatoController.js" />
+    <Content Include="ViewsAngularWhatever\filters\nameFilter.js" />
+    <Content Include="ViewsAngularWhatever\view\contatos.html" />
+    <Content Include="ViewsAngularWhatever\view\footer.html" />
+    <Content Include="ViewsAngularWhatever\view\home.html" />
+    <Content Include="ViewsAngularWhatever\view\novoContato.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -350,6 +362,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewsAngularWhatever\config\" />
+    <Folder Include="ViewsAngularWhatever\services\" />
     <Folder Include="Views\Contatos\" />
     <Folder Include="Views\Operadoras\" />
   </ItemGroup>
