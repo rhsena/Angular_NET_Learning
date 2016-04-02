@@ -7,7 +7,8 @@
     <script src="../../Scripts/angularJS/angular-messages.js"></script>
     <script src="../../Scripts/angularJS/angular-route.js"></script>
     <script src="../../Scripts/angularJS/angular-locale_pt-br.js"></script>
-
+    <script src="../../Scripts/ng-file-upload.js"></script>
+    <script src="../../Scripts/ng-file-upload-shim.js"></script>
     <!--Estilos-->
     <link href="../../Content/bootstrap.css" rel="stylesheet" />
     <link href="../../Content/Style/ListaContatos.css" rel="stylesheet" />
@@ -21,11 +22,13 @@
             <table class="table table-condensed table-hover">
                 <tr class="alert-info">
                     <th></th>
+                    <th></th>
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>Operadora</th>
                 </tr>
-                <tr ng-repeat="contato in contatos" class="palleta">
+                <tr ng-repeat="contato in contatos" class="palleta" ng-class="{'selecionado negrito:' contato.selecionado}">
+                    <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                     <td></td>
                     <td>{{ contato.NomeContato }}</td>
                     <td>{{ contato.TelefoneContato }}</td>
@@ -33,21 +36,37 @@
                 </tr>
                 <tr class="palleta">
                     <td></td>
-                    <td>{{ contato.NomeContato}}</td>
-                    <td>{{ contato.TelefoneContato}}</td>
                     <td></td>
+                    <td>{{contato.NomeContato}}</td>
+                    <td>{{contato.TelefoneContato}}</td>
+                    <td ng-bind="nomeOperadora"></td>
+
                 </tr>
             </table>
             <!--TABLE LISTA CONTATOS FIM-->
             <hr />
-            <div>
-                <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome"/>
-                <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone"/>
-                <select ng-model="contato.OperadoraIDContato">
-
-                </select>
-                <button class="btn  btn-info btn-block" ng-click="AddContato(contato)">Adicionar Contato</button>
+            <div ng-show="formContato.$invalid" class="alert alert-danger font16">
+                <div ng-show="formContato.nome.$invalid" class="alert-danger">Preencha um Nome</div>
+                <div ng-show="formContato.telefone.$invalid" class="alert-danger">Preecha um telefone</div>
             </div>
+            <div>
+                <form name="formContato">
+                    <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome" ng-required="true" name="nome"/>
+                    <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone" ng-required="true" name="telefone"/>
+                    <select class="form-control" ng-model="contato.OperadoraIDContato" ng-change="nomeOperadoraGet(contato.OperadoraIDContato)" ng-options="operadora.OperadoraID as operadora.NomeOperadora for operadora in operadoras ">
+                        <option value="">Selecione uma Operadora</option>
+                    </select>
+              
+                </form>
+ 
+                <!--Upload-->
+                
+
+                <!--Upload-->
+                    <button class="btn  btn-info btn-block" ng-click="AddContato(contato)" ng-disabled="formContato.$invalid">Adicionar Contato</button>
+                    <button class="btn  btn-danger btn-block" ng-click="" ng-disabled="false">Deletar Contatos</button>
+
+</div>
         </div>
       </div>  
         
@@ -57,13 +76,32 @@
 
 
     <script>
-    angular.module("aplicacao", []);
-    angular.module("aplicacao").controller("ListaContatosController", function ($scope, $http) {
+        angular.module("aplicacao", ['ngFileUpload']);
+        angular.module("aplicacao").controller("ListaContatosController", function ($scope, $http, Upload, $timeout) {
+        //modulo fileupload
+     
+        /////////////////////////////////////////
         $scope.appName = "Lista de Contatos";
 
         $scope.AddContato = function (contato) {
-            console.log(contato);
+            $http.post("http://localhost:53957/api/Contato", contato).success(function (data,status) {
+                carregarContatos();
+            });
+
         };
+
+
+        $scope.nomeOperadoraGet = function (operadoraID) {
+            var operadora = $scope.operadoras.filter(function (elemento) {
+                return elemento.OperadoraID === operadoraID;
+            });
+            //console.log(operadora.length);
+            if (operadora.length > 0)
+                $scope.nomeOperadora = operadora[0].NomeOperadora;
+            else
+                delete $scope.nomeOperadora; 
+        };
+
         var carregarContatos = function () {
             $http.get("http://localhost:53957/api/Contato").success(function (data, status) {
                 $scope.contatos = data;
@@ -75,8 +113,10 @@
                 $scope.operadoras = data;
             });
         };
+
        
         carregarContatos();
+        carregarOperadoras();
     });
     </script>
 </body>
