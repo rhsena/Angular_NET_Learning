@@ -18,20 +18,22 @@
     <div ng-controller="ListaContatosController">
         <div class="jumbotron">
             <h3 ng-bind="appName" class="titulo"></h3>
+            {{data | date: "dd/MM/yyyy"}}
+            <input class="form-control" ng-model="busca" placeholder="buscar"/>
             <!--TABLE LISTA CONTATOS-->
             <table class="table table-condensed table-hover">
                 <tr class="alert-info">
                     <th></th>
                     <th></th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Operadora</th>
+                    <th><a href="" ng-click="ordernarPor('NomeContato')">Nome</a></th>
+                    <th><a href="" ng-click="ordernarPor('TelefoneContato')">Telefone</a></th>
+                    <th><a href="" ng-click="ordernarPor('Operadora.NomeOperadora')">Operadora</a></th>
                 </tr>
-                <tr ng-repeat="contato in contatos" class="palleta" ng-class="{'selecionado negrito:' contato.selecionado}">
+                <tr ng-repeat="contato in contatos | filter: busca | orderBy: criterioOrdenacao : !crescOuDecr " class="palleta">
                     <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                     <td></td>
-                    <td>{{ contato.NomeContato }}</td>
-                    <td>{{ contato.TelefoneContato }}</td>
+                    <td>{{ contato.NomeContato | limitTo: 6 }}</td>
+                    <td>{{ contato.TelefoneContato | limitTo: 9}}</td>
                     <td>{{ contato.Operadora.NomeOperadora }}</td>
                 </tr>
                 <tr class="palleta">
@@ -39,21 +41,25 @@
                     <td></td>
                     <td>{{contato.NomeContato}}</td>
                     <td>{{contato.TelefoneContato}}</td>
-                    <td ng-bind="nomeOperadora"></td>
+                    <td>{{nomeOperadora}}</td>
 
                 </tr>
             </table>
             <!--TABLE LISTA CONTATOS FIM-->
             <hr />
-            <div ng-show="formContato.$invalid" class="alert alert-danger font16">
-                <div ng-show="formContato.nome.$invalid" class="alert-danger">Preencha um Nome</div>
-                <div ng-show="formContato.telefone.$invalid" class="alert-danger">Preecha um telefone</div>
+            <div ng-show="formContato.nome.$dirty" ng-messages="formContato.nome.$error" class="alert alert-danger font16">
+                <div ng-message="required">Preencha um Nome</div>
+                <div ng-message="minlength">Minimo de 7 caracteres</div>
+            </div>
+            <div ng-show="formContato.telefone.$dirty" ng-messages="formContato.telefone.$error" class="alert alert-danger font16">
+                <div ng-message="required">Preecha um Telefone</div>
+                <div ng-message="pattern">Telefone Invalido</div>
             </div>
             <div>
                 <form name="formContato">
-                    <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome" ng-required="true" name="nome"/>
-                    <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone" ng-required="true" name="telefone"/>
-                    <select class="form-control" ng-model="contato.OperadoraIDContato" ng-change="nomeOperadoraGet(contato.OperadoraIDContato)" ng-options="operadora.OperadoraID as operadora.NomeOperadora for operadora in operadoras ">
+                    <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome" ng-required="true" name="nome" ng-minlength="7"/>
+                    <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone" ng-required="true" name="telefone" ng-pattern="/^\d{4,5}-\d{4}$/"/>
+                    <select class="form-control" ng-model="contato.OperadoraIDContato" ng-change="nomeOperadoraGet(contato.OperadoraIDContato)" ng-options="operadora.OperadoraID as operadora.NomeOperadora for operadora in operadoras | orderBy: 'NomeOperadora' ">
                         <option value="">Selecione uma Operadora</option>
                     </select>
               
@@ -76,20 +82,26 @@
 
 
     <script>
-        angular.module("aplicacao", ['ngFileUpload']);
+        angular.module("aplicacao", ['ngFileUpload', "ngMessages"]);
         angular.module("aplicacao").controller("ListaContatosController", function ($scope, $http, Upload, $timeout) {
         //modulo fileupload
      
         /////////////////////////////////////////
         $scope.appName = "Lista de Contatos";
-
+        $scope.data = new Date();
         $scope.AddContato = function (contato) {
-            $http.post("http://localhost:53957/api/Contato", contato).success(function (data,status) {
+            $http.post("http://localhost:53957/api/Contato", contato).success(function (data, status) {
+                delete $scope.contato;
+                delete $scope.nomeOperadora;
+                $scope.formContato.$setPristine();
                 carregarContatos();
             });
 
         };
-
+        $scope.ordernarPor = function (campo) {
+            $scope.criterioOrdenacao = campo;
+            $scope.crescOuDecr = !$scope.crescOuDecr;
+        };
 
         $scope.nomeOperadoraGet = function (operadoraID) {
             var operadora = $scope.operadoras.filter(function (elemento) {
