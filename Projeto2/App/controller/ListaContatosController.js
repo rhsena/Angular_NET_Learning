@@ -34,7 +34,12 @@ angular.module("aplicacao").controller("ListaContatosController", function ($sco
     };
 
     var carregarContatos = function () {
-        $http.get("http://localhost:53957/api/Contato").success(function (data, status) {
+
+        $http({
+            url: "http://localhost:53957/api/Contato",
+            method: "GET",
+            //params: { user_id: user.id }
+        }).success(function (data) {
             $scope.contatos = data;
         });
     };
