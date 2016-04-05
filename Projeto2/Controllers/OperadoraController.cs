@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Projeto2.Controllers
 {
@@ -25,8 +26,18 @@ namespace Projeto2.Controllers
         }
 
         // POST: api/Operadora
-        public void Post([FromBody]string value)
+        [ResponseType(typeof(Operadora))]
+        public IHttpActionResult Post([FromBody]Operadora operadora)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            OperadoraDAO operadoraDAO = new OperadoraDAO();
+            operadoraDAO.Insert(operadora);
+
+            return CreatedAtRoute("DefaultApi", new { id = operadora.OperadoraID }, operadora);
+
         }
 
         // PUT: api/Operadora/5

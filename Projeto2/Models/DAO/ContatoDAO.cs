@@ -15,6 +15,7 @@ namespace Projeto2.Models.DAO
             using (ApplicationDbContext dbcontext = new ApplicationDbContext())
             {
                 return dbcontext.Contatos.Include(o=> o.Operadora).ToList();
+                #region join comentada
                 //var innerjoin = from contatos in dbcontext.Contatos
                 //            join operadora in dbcontext.Operadoras on contatos.Operadora.OperadoraID equals operadora.OperadoraID
                 //             select new Contato {
@@ -23,9 +24,10 @@ namespace Projeto2.Models.DAO
                 //                  Operadora = new Operadora { OperadoraID = operadora.OperadoraID, CodigoOperadora = operadora.CodigoOperadora,
                 //                                               NomeOperadora = operadora.NomeOperadora, Tipo = operadora.Tipo}
                 //             };
+                #endregion
             }
-            
-            
+
+
         }
 
 

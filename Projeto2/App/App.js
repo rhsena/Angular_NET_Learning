@@ -1,0 +1,1 @@
+﻿angular.module("aplicacao", ['ngFileUpload', "ngMessages", "ui.mask", "ngRoute"]);

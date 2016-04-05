@@ -289,6 +289,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\App.js" />
+    <Content Include="App\config\routeConfig.js" />
+    <Content Include="App\view\Contatos.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -302,6 +305,7 @@
     <Content Include="Scripts\angularJS\angular-messages.js" />
     <Content Include="Scripts\angularJS\angular-route.js" />
     <Content Include="Scripts\angularJS\angular.js" />
+    <Content Include="Scripts\angularJS\mask.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -346,13 +350,12 @@
     <Content Include="Scripts\ng-file-upload.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="ViewsAngularWhatever\controller\ListaTelefonicaController.js" />
-    <Content Include="ViewsAngularWhatever\controller\novoContatoController.js" />
-    <Content Include="ViewsAngularWhatever\filters\nameFilter.js" />
-    <Content Include="ViewsAngularWhatever\view\contatos.html" />
-    <Content Include="ViewsAngularWhatever\view\footer.html" />
-    <Content Include="ViewsAngularWhatever\view\home.html" />
-    <Content Include="ViewsAngularWhatever\view\novoContato.html" />
+    <Content Include="App\controller\ListaContatosController.js" />
+    <Content Include="App\controller\OperadoraController.js" />
+    <Content Include="App\filters\nameFilter.js" />
+    <Content Include="App\view\footer.html" />
+    <Content Include="App\view\home.html" />
+    <Content Include="App\view\NovaOperadora.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -370,9 +373,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\services\" />
     <Folder Include="App_Data\" />
-    <Folder Include="ViewsAngularWhatever\config\" />
-    <Folder Include="ViewsAngularWhatever\services\" />
     <Folder Include="Views\Contatos\" />
     <Folder Include="Views\Operadoras\" />
   </ItemGroup>
