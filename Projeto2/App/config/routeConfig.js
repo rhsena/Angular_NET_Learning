@@ -9,4 +9,6 @@
         controller: "OperadoraController"
     });
 
+    $routeProvider.otherwise({redirectTo: "/Contatos"});
+
 });

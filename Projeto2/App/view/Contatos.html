@@ -1,0 +1,69 @@
+﻿<div>
+    <div class="jumbotron">
+        <h3 ng-bind="appName" class="titulo"></h3>
+        {{data | date: "dd/MM/yyyy"}}
+        <input class="form-control" ng-model="busca" placeholder="buscar" />
+        <!--TABLE LISTA CONTATOS-->
+        <table class="table table-condensed table-hover">
+            <tr class="alert-info">
+                <th></th>
+                <th></th>
+                <th><a href="" ng-click="ordernarPor('NomeContato')">Nome</a></th>
+                <th><a href="" ng-click="ordernarPor('TelefoneContato')">Telefone</a></th>
+                <th><a href="" ng-click="ordernarPor('Operadora.NomeOperadora')">Operadora</a></th>
+            </tr>
+            <tr ng-repeat="contato in contatos | filter: busca | orderBy: criterioOrdenacao : !crescOuDecr " class="palleta">
+                <td><input type="checkbox" ng-model="contato.selecionado" /></td>
+                <td></td>
+                <td>{{ contato.NomeContato  | limitTo: 6 }}</td>
+                <td>{{ contato.TelefoneContato | limitTo: 9}}</td>
+                <td>{{ contato.Operadora.NomeOperadora }}</td>
+            </tr>
+            <tr class="palleta">
+                <td></td>
+                <td></td>
+                <td>{{contato.NomeContato | limitTo: 6}}</td>
+                <td>{{contato.TelefoneContato | limitTo: 9}}</td>
+                <td>{{nomeOperadora}}</td>
+
+            </tr>
+        </table>
+        <!--TABLE LISTA CONTATOS FIM-->
+        <hr />
+        <div ng-show="formContato.nome.$dirty" ng-messages="formContato.nome.$error">
+            <div ng-message="required" class="alert alert-danger font16">Preencha um Nome</div>
+            <div ng-message="minlength" class="alert alert-danger font16">Minimo de 7 caracteres</div>
+        </div>
+        <div ng-show="formContato.telefone.$dirty" ng-messages="formContato.telefone.$error">
+            <div ng-message="required" class="alert alert-danger font16">Preecha um Telefone</div>
+            <div ng-message="pattern" class="alert alert-danger font16">Telefone Invalido</div>
+        </div>
+        <div>
+            <form name="formContato">
+                <div class="col-xs-12">
+                    <input class="form-control" type="text" ng-model="contato.NomeContato" placeholder="Nome" ng-required="true" name="nome" ng-minlength="7" />
+                </div>
+                <div class="col-xs-12">
+                    <input class="form-control" type="text" ng-model="contato.TelefoneContato" placeholder="Telefone" ng-required="true" name="telefone" ng-pattern="/^\d{4,5}-\d{4}$/"/>
+                </div>
+                <div class="col-xs-8">
+                    <select class="form-control font16" ng-model="contato.OperadoraIDContato" ng-change="nomeOperadoraGet(contato.OperadoraIDContato)" ng-options="operadora.OperadoraID as operadora.NomeOperadora for operadora in operadoras | orderBy: 'NomeOperadora' ">
+                        <option value="">Seleciona a Operadora</option>
+                    </select>
+                </div>
+                <div class="col-xs-4">
+                    <button class="form-control btn-success" ng-click="NovaOperadora()"> Operadora</button>
+                </div>
+
+            </form>
+
+            <!--Upload-->
+            <!--Upload-->
+            <div class="col-xs-12">
+                <button class="btn  btn-info btn-block" ng-click="AddContato(contato)" ng-disabled="formContato.$invalid">Adicionar Contato</button>
+                <button class="btn  btn-danger btn-block" ng-click="" ng-disabled="false">Deletar Contatos</button>
+            </div>
+        </div>
+    </div>
+
+</div>  

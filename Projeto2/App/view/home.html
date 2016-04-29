@@ -1,0 +1,26 @@
+﻿<html ng-app="aplicacao">
+<head>
+    <title>Angular aplicacao</title>
+
+    <!--Scripts-->
+    <script src="../../Scripts/angularJS/angular.js"></script>
+    <script src="../../Scripts/angularJS/angular-messages.js"></script>
+    <script src="../../Scripts/angularJS/angular-route.js"></script>
+    <script src="../../Scripts/angularJS/angular-locale_pt-br.js"></script>
+    <script src="../../Scripts/ng-file-upload.js"></script>
+    <script src="../../Scripts/ng-file-upload-shim.js"></script>
+    <script src="../../Scripts/angularJS/mask.js"></script>
+    <script src="../../App/App.js"></script>
+    <script src="../../App/controller/ListaContatosController.js"></script>
+    <script src="../../App/controller/OperadoraController.js"></script>
+    <script src="../../App/config/routeConfig.js"></script>
+    <!--Estilos-->
+    <link href="../../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../../Content/Style/ListaContatos.css" rel="stylesheet" />
+</head>
+<body class="principal">
+    
+    <div ng-view></div>
+    <div ng-include="'footer.html'"></div>
+</body>
+</html>
